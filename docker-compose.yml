@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  backend:
+    image: fayeque123/ygwebapp:latest
+    container_name: spring-boot-app
+    ports:
+      - "8080:8090" # Expose API to the host
+    networks:
+      - app-network
+
+  frontend:
+    image: fayeque123/ygwebfe:latest
+    container_name: next-js-app
+    ports:
+      - "3000:3000" # Expose Next.js app to the host
+    networks:
+      - app-network
+    environment:
+      - NEXT_PUBLIC_API_URL=http://spring-boot-app:8080
+
+networks:
+  app-network:
+    driver: bridge
